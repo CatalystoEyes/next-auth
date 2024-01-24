@@ -7,6 +7,7 @@ import { FaGithub } from "react-icons/fa";
 import { FaGoogle } from "react-icons/fa";
 import { MdOutlineDarkMode } from "react-icons/md";
 import { useRouter } from "next/navigation";
+import SignComponent from "./Components/FormComponents/SignComponent"
 export default function Home() {
   const router = useRouter()
   return <>
@@ -21,11 +22,7 @@ export default function Home() {
       <h3 className="scroll-m-20 text-2xl font-semibold tracking-tight mt-3">
         Enter your password & email
       </h3>
-      <div className="w-1/3 mt-10">
-        <Input className="mb-4" type="email" placeholder="Email" />
-        <Input className="mb-4" type="email" placeholder="Password" />
-      </div>
-      <Button className="mb-4 w-1/3">Sign in</Button>
+      <SignComponent />
       <Button className="mb-2 w-1/3" variant="ghost" onClick={() => router.push('/regist')}>Create new account</Button>
       <p className="text-lg text-muted-foreground mb-1">Continue with</p>
       <Button className="mb-2 mx-1 w-1/3" variant="outline"><FaGithub />&nbsp;GitHub</Button>
