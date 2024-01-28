@@ -1,6 +1,6 @@
 import express from "express"
 import cors from "cors";
-import jwt, { JwtPayload } from 'jsonwebtoken'
+import jwt from 'jsonwebtoken'
 import { users } from './db.ts';
 import { Request } from 'express';
 
