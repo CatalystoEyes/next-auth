@@ -13,7 +13,7 @@ export default function Home() {
 
   // useEffect(() => {
   //   async function fetchData() {
-  //     const response = await fetch('http://localhost:3000/users');
+  //     const response = await fetch('/users');
   //     const jsonData = await response.json();
   //     setData(jsonData);
   //   }
