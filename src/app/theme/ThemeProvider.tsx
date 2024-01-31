@@ -1,21 +1,9 @@
-import { FC, ReactNode, useMemo, useState } from 'react';
-import type { Theme } from './ThemeContext';
-import { ThemeContext } from './ThemeContext';
+"use client"
 
-export interface ThemeProps {
-    startTheme?: Theme;
-    children: ReactNode;
+import * as React from "react"
+import { ThemeProvider as NextThemesProvider } from "next-themes"
+import { type ThemeProviderProps } from "next-themes/dist/types"
+
+export function ThemeProvider({ children, ...props }: ThemeProviderProps) {
+    return <NextThemesProvider {...props}>{children}</NextThemesProvider>
 }
-
-export const ThemeProvider: FC<ThemeProps> = ({ children, startTheme = 'dark' }) => {
-    const [theme, setTheme] = useState<Theme>(startTheme);
-
-    const value = useMemo(() => ({ theme, setTheme }), [theme]);
-
-    return (
-        <ThemeContext.Provider value={value}>
-            {children}
-        </ThemeContext.Provider>)
-}
-
-export default ThemeProvider;

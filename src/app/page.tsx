@@ -5,8 +5,6 @@ import SignComponent from "./Components/FormComponents/FormComponents/SignCompon
 import AuthButtons from "./Components/Buttons/AuthHeaderButtons";
 import OAuthButtons from "./Components/Buttons/OAuthButtons";
 import CheckPolicy from "./Components/FormComponents/FormComponents/CheckPolicy";
-import { useEffect, useState } from "react";
-
 
 export default function Home() {
   // const [data, setData] = useState([]);
