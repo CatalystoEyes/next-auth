@@ -3,6 +3,8 @@ import { Roboto_Mono as FontSans } from "next/font/google"
 import { cn } from "@/lib/utils"
 import "./globals.css";
 import { ThemeProvider } from "./theme/ThemeProvider";
+import { Toaster } from "@/components/ui/toaster";
+import AuthProvider from "./Components/Providers/AuthProvider";
 export const fontSans = FontSans({
   subsets: ["latin"],
   variable: "--font-sans",
@@ -15,6 +17,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
+
 }: Readonly<{
   children: React.ReactNode;
 }>) {
@@ -27,14 +30,17 @@ export default function RootLayout({
           fontSans.variable
         )}
       >
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        >
-          {children}
-        </ThemeProvider>
+        <AuthProvider>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+            {children}
+          </ThemeProvider>
+          <Toaster />
+        </AuthProvider>
       </body>
     </html>
   );

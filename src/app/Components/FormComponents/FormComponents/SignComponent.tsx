@@ -1,9 +1,11 @@
 "use client"
 
+import { FormEventHandler, useState } from 'react';
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import * as z from "zod"
-
+import { ToastAction } from "@/components/ui/toast"
+import { useToast } from "@/components/ui/use-toast"
 import { Button } from "@/components/ui/button"
 import {
     Form,
@@ -13,6 +15,8 @@ import {
     FormMessage,
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
+import { useRouter } from 'next/navigation';
+import { signIn } from 'next-auth/react';
 
 const formSchema = z.object({
     email: z.string().min(2, {
@@ -24,6 +28,54 @@ const formSchema = z.object({
 })
 
 export default function SignComponent() {
+    const router = useRouter()
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const handleLogin = async (e: React.FormEvent<HTMLInputElement>) => {
+        e.preventDefault();
+
+        try {
+            const response = await fetch('/api/auth', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ email, password }),
+            });
+
+            const data = await response.json();
+            console.log(`User was succesfully registred with data: ${data}`)
+            toast({
+                title: "🎉Successful regisrtation",
+                description: "User was successful registrated!",
+                action: (
+                    <ToastAction altText="Goto schedule to undo">Undo</ToastAction>
+                ),
+            })
+        } catch (error) {
+            console.error(error);
+        }
+    };
+
+    const handleSubmit: FormEventHandler<HTMLFormElement> = async (event) => {
+        event.preventDefault()
+
+        const formData = new FormData(event.currentTarget)
+
+        const res = await signIn('credentials', {
+            email: formData.get('email'),
+            password: formData.get('password'),
+            redirect: false
+        })
+
+        if (res && !res.error) {
+            router.push('/profile')
+        } else {
+            console.log(res)
+        }
+    }
+
+    const { toast } = useToast()
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
@@ -45,7 +97,7 @@ export default function SignComponent() {
                     render={({ field }) => (
                         <FormItem>
                             <FormControl>
-                                <Input placeholder="Enter your Email" {...field} />
+                                <Input type="email" placeholder="Enter your Email" {...form} onChange={(e) => setEmail(e.target.value)} />
                             </FormControl>
                             <FormMessage />
                         </FormItem>
@@ -57,13 +109,14 @@ export default function SignComponent() {
                     render={({ field }) => (
                         <FormItem>
                             <FormControl>
-                                <Input placeholder="Enter your Password" {...field} />
+                                <Input type="password" {...form} placeholder="Enter your Password" onChange={(e) => setPassword(e.target.value)} />
                             </FormControl>
                             <FormMessage />
                         </FormItem>
                     )}
                 />
-                <Button className="mb-4 w-full">Sign in</Button>
+                <Button className="mb-4 w-full" variant="default"
+                    onClick={() => handleLogin} type='submit'>Sign in</Button>
             </form>
         </Form>
     )

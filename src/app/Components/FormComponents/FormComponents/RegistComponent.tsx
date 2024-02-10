@@ -3,7 +3,8 @@
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import * as z from "zod"
-
+import { ToastAction } from "@/components/ui/toast"
+import { useToast } from "@/components/ui/use-toast"
 import { Button } from "@/components/ui/button"
 import {
     Form,
@@ -27,6 +28,7 @@ const formSchema = z.object({
 })
 
 export default function RegistComponent() {
+    const { toast } = useToast()
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
@@ -39,6 +41,7 @@ export default function RegistComponent() {
     function onSubmit(values: z.infer<typeof formSchema>) {
         console.log(values)
     }
+
 
     return (
         <Form {...form}>
@@ -79,7 +82,18 @@ export default function RegistComponent() {
                         </FormItem>
                     )}
                 />
-                <Button className="mb-4 w-full">Sign up</Button>
+                <Button className="mb-4 w-full"
+                    variant="default"
+                    onClick={() => {
+                        toast({
+                            title: "🎉Successful registration",
+                            description: "User was successful registrated!",
+                            action: (
+                                <ToastAction altText="Goto schedule to undo">Undo</ToastAction>
+                            ),
+                        })
+                    }}
+                >Sign up</Button>
             </form>
         </Form>
     )

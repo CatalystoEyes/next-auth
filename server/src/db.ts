@@ -1,17 +1,17 @@
 export const users = [
     {
         "id": 1,
-        "login": "user1",
+        "email": "user1@email.com",
         "password": "password1"
     },
     {
         "id": 2,
-        "login": "user2",
+        "email": "user2@email.com",
         "password": "password2"
     },
     {
         "id": 3,
-        "login": "user3",
+        "email": "user3@email.com",
         "password": "password3"
     }
 ]

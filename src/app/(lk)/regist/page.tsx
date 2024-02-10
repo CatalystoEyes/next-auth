@@ -2,16 +2,16 @@
 import React from 'react'
 import { Button } from "@/components/ui/button"
 import RegistComponent from '@/app/Components/FormComponents/FormComponents/RegistComponent'
-import RegistButtons from '@/app/Components/Buttons/RegistHeaderButtons'
+import HeaderButtons from '@/app/Components/Buttons/HeaderButtons'
 import { useRouter } from 'next/navigation'
 import OAuthButtons from '@/app/Components/Buttons/OAuthButtons'
 import CheckPolicy from '@/app/Components/FormComponents/FormComponents/CheckPolicy'
-const Regist = () => {
+const RegistPage = () => {
     const router = useRouter()
 
     return (
         <>
-            <RegistButtons />
+            <HeaderButtons />
             <div className="flex flex-col items-center">
                 <h1 className="scroll-m-20 text-xl tracking-tight lg:text-4xl mt-8">
                     Create an account
@@ -26,4 +26,4 @@ const Regist = () => {
     )
 }
 
-export default Regist
+export default RegistPage

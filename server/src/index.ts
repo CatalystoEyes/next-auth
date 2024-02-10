@@ -7,13 +7,13 @@ import { Request, Response } from 'express';
 interface AuthRequest extends Request {
     user?: {
         id: number;
-        login: string;
+        email: string;
         password: string;
     };
 }
 
 const app = express()
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3001;
 const tokenKey = 'some tokenKey';
 const refreshTokenKey = 'some refreshTokenKey';
 const host = 'http://localhost';
@@ -55,12 +55,12 @@ app.use((req: AuthRequest, res: Response, next) => {
 app.post('/api/auth', (req, res: Response) => {
     for (let user of users) {
         if (
-            req.body.login === user.login &&
+            req.body.login === user.email &&
             req.body.password === user.password
         ) {
             return res.status(200).json({
                 id: user.id,
-                login: user.login,
+                login: user.email,
                 token: jwt.sign({ id: user.id }, tokenKey),
             });
         }
